@@ -14,10 +14,104 @@
 //
 // ============================================================================
 
-// Inclusão das bibliotecas padrão necessárias para entrada/saída, alocação de memória, manipulação de strings e tempo.
+#include <stdio.h>
+#include <string.h>
 
-// --- Constantes Globais ---
-// Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
+#define TAM_MAX_NOME 30 // Definindo constantes para os territorios, missoes e tamanho maximo da string
+#define NUM_TERRITORIOS 5
+#define TAM_MAX_COR 10
+
+//definindo a struct do territorio
+struct Territorio{
+    char nome[TAM_MAX_NOME];
+    char cor[TAM_MAX_COR];
+    int tropas;   
+};
+
+//função para limpar o buffer de entrada
+void LimparBufferEntredas(){
+    int c;
+    while ((c = getchar())!= '\n' && c != EOF ); 
+};
+
+int main(){
+    struct Territorio cadastro[NUM_TERRITORIOS];
+    int totalterritorios;
+    int opcao;
+
+    do{
+        printf("----Bem vindo---\n");
+        printf("======================\n");
+        printf("---Menu de opções---\n");
+        printf("======================\n");
+        printf("1 - Para cadastrar um territorio\n");
+        printf("2 - Para exibir os territorios cadastrador\n");
+        printf("0 - Para sair\n");
+        printf("======================\n");
+        scanf("----> %d", &opcao);
+        LimparBufferEntredas();
+
+        switch (opcao)
+        {
+        case 1:
+            if (totalterritorios < NUM_TERRITORIOS){
+                printf("Digite o nome do territorio: ");
+                fgets(cadastro[totalterritorios].nome, TAM_MAX_NOME, stdin);
+
+                printf("Digite a cor do seu territorio: ");
+                fgets(cadastro[totalterritorios].cor, TAM_MAX_COR, stdin);//aqui os valores do tipo char
+
+
+
+                cadastro[totalterritorios].nome[strcspn(cadastro[totalterritorios].nome, "\n")] = '\0';// Finalidade: Remover o caractere de nova linha (\n) inserido por fgets.
+                cadastro[totalterritorios].cor[strcspn(cadastro[totalterritorios].cor, "\n")] = '\0';//          
+            
+                printf("Digite o numero de tropas: "); // separadaamente, a do tipo interio
+                scanf("%d", &cadastro[totalterritorios].tropas);
+                LimparBufferEntredas();
+                
+                totalterritorios ++;
+
+            }else{
+                printf("Maximo de territorios atingido\n");
+                printf("\n Pressione enter para continuar..."); //Pausa para o usuario ler
+                getchar();
+
+            }
+
+        break;
+
+        case 2:
+            if (totalterritorios == 0){
+                printf("Nenhum territorio encontrado...\n ");
+                printf("Pressione enter para continuar...");
+                getchar();
+   
+            }else{
+                for (int i = 0; i < totalterritorios; i++ ){
+                    printf("======================\n");
+                    printf("Territorio %d: \n", i + 1);
+                    printf("Nome: %s \n", cadastro[i].nome);
+                    printf("Cor: %s \n", cadastro [i].cor);
+                    printf("Tropas: %d \n", cadastro[i].tropas);
+                };
+
+            };
+
+            printf("Pressione enter para continuar...");
+            getchar();
+            break;
+            
+    
+        default:
+            printf("Valor digitado invalido...");
+            printf("Pressione enter para continuar...");
+            getchar();
+            break;    
+        };
+    }while (opcao != 0);
+    return 0;
+};
 
 // --- Estrutura de Dados ---
 // Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
@@ -51,8 +145,6 @@ int main() {
     // 3. Limpeza:
     // - Ao final do jogo, libera a memória alocada para o mapa para evitar vazamentos de memória.
 
-    return 0;
-}
 
 // --- Implementação das Funções ---
 
