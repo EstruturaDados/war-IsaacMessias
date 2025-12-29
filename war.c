@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define TAM_MAX_NOME 30 // Definindo constantes para os territorios, missoes e tamanho maximo da string
+#define TAM_MAX_NOME 30 // Definindo constantes para os territorios e tamanho maximo da string da cor e nome
 #define NUM_TERRITORIOS 5
 #define TAM_MAX_COR 10
 
@@ -64,11 +64,11 @@ int main(){
 
 
                 cadastro[totalterritorios].nome[strcspn(cadastro[totalterritorios].nome, "\n")] = '\0';// Finalidade: Remover o caractere de nova linha (\n) inserido por fgets.
-                cadastro[totalterritorios].cor[strcspn(cadastro[totalterritorios].cor, "\n")] = '\0';//          
+                cadastro[totalterritorios].cor[strcspn(cadastro[totalterritorios].cor, "\n")] = '\0';// Garante que não haja salto de linha no meio da string         
             
                 printf("Digite o numero de tropas: "); // separadaamente, a do tipo interio
                 scanf("%d", &cadastro[totalterritorios].tropas);
-                LimparBufferEntredas();
+                LimparBufferEntredas(); // usando a função de limpar buffer apos o scanf, preventivo
                 
                 totalterritorios ++;
 
@@ -82,13 +82,13 @@ int main(){
         break;
 
         case 2:
-            if (totalterritorios == 0){
+            if (totalterritorios == 0){ // confere se tem um territorio cadastrado
                 printf("Nenhum territorio encontrado...\n ");
                 printf("Pressione enter para continuar...");
                 getchar();
    
             }else{
-                for (int i = 0; i < totalterritorios; i++ ){
+                for (int i = 0; i < totalterritorios; i++ ){ //Loop que corre todos os territorios
                     printf("======================\n");
                     printf("Territorio %d: \n", i + 1);
                     printf("Nome: %s \n", cadastro[i].nome);
@@ -98,12 +98,12 @@ int main(){
 
             };
 
-            printf("Pressione enter para continuar...");
+            printf("Pressione enter para continuar..."); //pausa para o usuario ler 
             getchar();
             break;
             
     
-        default:
+        default: // defalt para valores invalidos
             printf("Valor digitado invalido...");
             printf("Pressione enter para continuar...");
             getchar();
